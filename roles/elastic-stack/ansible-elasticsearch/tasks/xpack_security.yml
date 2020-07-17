@@ -128,13 +128,13 @@
     - xpack-security
     - molecule-idempotence-notest
 
-- name: Delete certs.zip in Generator node
-  file:
-    state: absent
-    path: "{{ node_certs_source }}/certs.zip"
-  when:
-    - node_certs_generator
-  tags: molecule-idempotence-notest
+# - name: Delete certs.zip in Generator node
+#   file:
+#     state: absent
+#     path: "{{ node_certs_source }}/certs.zip"
+#   when:
+#     - node_certs_generator
+#   tags: molecule-idempotence-notest
 
 - name: Unzip generated certs.zip
   unarchive:
@@ -142,6 +142,7 @@
     dest: "{{ master_certs_path }}/"
   delegate_to: "127.0.0.1"
   become: no
+  changed_when: false
   when:
     - node_certs_generator
   tags:
